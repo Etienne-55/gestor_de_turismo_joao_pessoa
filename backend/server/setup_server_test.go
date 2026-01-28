@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"net/http"
@@ -10,7 +10,7 @@ import (
 
 
 func TestServer(t *testing.T) {
-	server := setupServer()
+	server := SetupServer()
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/test_server", nil)
