@@ -10,6 +10,7 @@ import (
 
 type TouristRepository interface {
 	Save(tourist *models.Tourist) error
+	ValidateCredentials(tourist *models.Tourist) error
 }
 
 type touristRepositoryImpl struct {
@@ -45,6 +46,5 @@ func (r *touristRepositoryImpl) Save(t *models.Tourist) error {
 
 	t.ID = touristID
 	return err
-
 }
 

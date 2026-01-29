@@ -15,6 +15,7 @@ type Dependencies struct {
 func AppRoutes(server *gin.Engine, deps *Dependencies){
 	//public routes
 	server.POST("/signup", deps.TouristController.Signup)
+	server.POST("/login", deps.TouristController.Login)
 
 	//test route
 	server.GET("/test", func(c *gin.Context) {

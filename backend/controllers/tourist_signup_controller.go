@@ -33,7 +33,6 @@ func (tc *TouristController) Signup(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"message":"error"})
 		return
 	}
-
 	context.JSON(http.StatusCreated, gin.H{"message":"user created successfully"})
 
 }
