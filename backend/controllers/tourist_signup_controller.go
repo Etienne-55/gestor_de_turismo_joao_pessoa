@@ -7,7 +7,30 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type SignupRequest struct {
+	Email    string `json:"email" binding:"required,email" example:"user@example.com"`
+	Password string `json:"password" binding:"required,min=8" example:"password123"`
+}
 
+type SignupResponse struct {
+	Message string `json:"message" example:"user created successfully"`
+}
+
+type ErrorResponse struct {
+	Message string `json:"message" example:"error description"`
+}
+
+// Signup godoc
+// @Summary      Create a new tourist account
+// @Description  Register a new tourist user with email and password
+// @Tags         Authentication
+// @Accept       json
+// @Produce      json
+// @Param        request body models.Tourist true "Signup credentials"
+// @Success      201 {object} map[string]string "User created successfully"
+// @Failure      400 {object} map[string]string "Invalid request"
+// @Failure      500 {object} map[string]string "Internal server error"
+// @Router       /signup [post]
 func (tc *TouristController) Signup(context *gin.Context) {
 	var tourist models.Tourist
 

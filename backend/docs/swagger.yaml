@@ -1,0 +1,75 @@
+basePath: /
+definitions:
+  models.Tourist:
+    properties:
+      email:
+        type: string
+      id:
+        format: int64
+        type: integer
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@yourwebsite.com
+    name: API Support
+    url: http://www.yourwebsite.com/support
+  description: A REST API for managing tourism platform operations
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Tourism Platform API
+  version: "1.0"
+paths:
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Register a new tourist user with email and password
+      parameters:
+      - description: Signup credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Tourist'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a new tourist account
+      tags:
+      - Authentication
+schemes:
+- http
+- https
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
