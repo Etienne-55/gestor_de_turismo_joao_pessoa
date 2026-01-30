@@ -21,3 +21,4 @@ func NewTouristRepository(db *sql.DB) TouristRepository {
 	}
 }
 
+

@@ -44,6 +44,7 @@ func createTables() {
 	trip_description TEXT NOT NULL,
 	arrival_date DATE NOT NULL,
 	departure_date DATE NOT NULL,
+	trip_review TEXT,
 	status TEXT DEFAULT 'upcoming' CHECK(status IN ('upcoming', 'ongoing', 'completed')),
 	tourist_id INTEGER,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
