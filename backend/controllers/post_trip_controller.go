@@ -9,7 +9,7 @@ import (
 )
 
 
-func (tc *TripController) CreateTrip( context *gin.Context) {
+func (tc *TripController) CreateTrip(context *gin.Context) {
 	var trip models.Trip
 	err := context.ShouldBindJSON(&trip)
 	if err != nil {

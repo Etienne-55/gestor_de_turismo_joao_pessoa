@@ -24,8 +24,6 @@ func (r *tripRepositoryImpl) SaveTrip(t *models.Trip) error {
 
 	id, err := result.LastInsertId()
 	t.ID = id
-	// events = append(events, *t)
 	return err
-
 }
 
