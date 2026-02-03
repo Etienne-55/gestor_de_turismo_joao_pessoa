@@ -19,6 +19,8 @@ func AppRoutes(server *gin.Engine, deps *Dependencies){
 	server.POST("/signup", deps.TouristController.Signup)
 	server.POST("/login", deps.TouristController.Login)
 	server.GET("/get_all_trips", deps.TripController.GetAllTrips)
+	server.GET("/get_trip_by_id/:id", deps.TripController.GetTripById)
+	server.GET("/delete_trip")
 
 	//test route
 	server.GET("/test", func(c *gin.Context) {
