@@ -15,23 +15,30 @@ type Dependencies struct {
 }
 
 func AppRoutes(server *gin.Engine, deps *Dependencies){
-	//public routes
-	server.POST("/signup", deps.TouristController.Signup)
-	server.POST("/login", deps.TouristController.Login)
-	server.GET("/get_trip_by_id/:id", deps.TripController.GetTripByID)
-
 	//test route
 	server.GET("/test", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
 
-	//protected routes
+	//public routes
+	server.POST("/signup", deps.TouristController.Signup)
+	server.POST("/login", deps.TouristController.Login)
+
+	//protected routes(user)
 	authenticated := server.Group("/")
-	authenticated.Use(middleware.Authenticate)
+	authenticated.Use(middleware.Authenticate())
+	{
 	authenticated.POST("/trip", deps.TripController.CreateTrip)
 	authenticated.DELETE("/delete_trip/:id", deps.TripController.DeleteTrip)
+	authenticated.GET("/get_trip_by_id/:id", deps.TripController.GetTripByID)
+	}
 
-
-	server.GET("/get_all_trips", middleware.Authenticate, middleware.RequireAdmin(), deps.TripController.GetAllTrips)
+	//protected routes(admin)
+	admin := server.Group("/admin")
+	admin.Use(middleware.Authenticate())
+	admin.Use(middleware.RequireAdmin())
+	{
+	server.GET("/get_all_trips", deps.TripController.GetAllTrips)
+	}
 }
 
