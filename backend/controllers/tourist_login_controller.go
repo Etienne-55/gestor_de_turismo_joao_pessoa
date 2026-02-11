@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"projeto_turismo_jp/models"
@@ -8,7 +9,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
-
 
 // Signup godoc
 // @Summary      Login in a tourist account
@@ -40,6 +40,12 @@ func (tc *TouristController) Login(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"message": "could not authenticate user", "error": err} )
 		return 
 	}
+
+	tc.hub.SendNotification(
+		"tourist login",
+		fmt.Sprintf("tourist %s, of ID %d loged in", tourist.Email, tourist.ID),
+		tourist,
+		)
 
 	context.JSON(http.StatusOK, gin.H{"message": "login successfull", "token": token })
 }

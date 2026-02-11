@@ -50,7 +50,7 @@ func main() {
 	tripRepo := repositories.NewTripRepository(db.DB)
 
 	//http layer
-	touristController := controllers.NewTouristController(touristRepo)
+	touristController := controllers.NewTouristController(touristRepo, hub)
 	tripController := controllers.NewTripController(tripRepo, hub)
 
 	deps := &routes.Dependencies{

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -27,8 +28,6 @@ func (tc *TripController) DeleteTrip(context *gin.Context) {
 	if trip.TouristID != int(touristID) {
 		context.JSON(http.StatusUnauthorized, gin.H{"message": "not authorized to delete trip"})
 		log.Printf("error: %v", err)
-		// log.Printf("id from the jwt %d", int(touristID))
-		// log.Printf("id from the database %d", int(trip.TouristID))
 		return
 	}
 
@@ -38,6 +37,12 @@ func (tc *TripController) DeleteTrip(context *gin.Context) {
 		log.Printf("error: %v", err)
 		return
 	}
+	
+	tc.hub.SendNotification(
+		"trip_deleted",
+		fmt.Sprintf("trip to %s deleted", trip.LodgingLocation),
+		trip,
+		)
 
 	context.JSON(http.StatusOK, gin.H{"message": "trip deleted"})
 }

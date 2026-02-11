@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -47,6 +48,14 @@ func (tc *TripController) AddReview(context *gin.Context) {
 		log.Printf("error: %v", err)
 		return
 	}
+
+	tc.hub.SendNotification(
+	"new_review_added",
+	fmt.Sprintf("tourist of ID: %d added a new review for trip of ID: %d", touristID, trip.ID),
+	trip,
+	)
+
+
 	context.JSON(http.StatusOK, gin.H{"message": "review registered"})
 } 
 

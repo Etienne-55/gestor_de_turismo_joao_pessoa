@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"projeto_turismo_jp/models"
@@ -48,6 +49,13 @@ func (tc *TouristController) Signup(context *gin.Context) {
 		log.Printf("error: %v", err)
 		return
 	}
+
+	tc.hub.SendNotification(
+		"new_tourist_account",
+		fmt.Sprintf("new tourist account created %s", tourist.Email),
+		tourist,
+		)
+
 	context.JSON(http.StatusCreated, gin.H{"message":"user created successfully"})
 
 }

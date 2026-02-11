@@ -5,20 +5,16 @@ import (
 	"strings"
 	"time"
 	
-	// tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
-// View renders the UI
 func (m model) View() string {
 	var s strings.Builder
 	
-	// Header
-	header := headerStyle.Render("🔔 Tourism Platform - Admin Dashboard")
+	header := headerStyle.Render("Admin Dashboard")
 	s.WriteString(header)
 	s.WriteString("\n\n")
 	
-	// Status
 	statusText := m.status
 	var statusStyled string
 	if m.connected {
@@ -29,16 +25,13 @@ func (m model) View() string {
 	s.WriteString("Status: " + statusStyled)
 	s.WriteString("\n")
 	
-	// Statistics
 	stats := fmt.Sprintf("Total Notifications: %d", len(m.notifications))
 	s.WriteString(stats)
 	s.WriteString("\n")
-	
-	// Divider
+
 	s.WriteString(strings.Repeat("─", m.width))
 	s.WriteString("\n")
 	
-	// Notifications
 	if len(m.notifications) == 0 {
 		s.WriteString("\n")
 		s.WriteString(lipgloss.NewStyle().
@@ -47,7 +40,6 @@ func (m model) View() string {
 			Render("  No notifications yet. Waiting for activity..."))
 		s.WriteString("\n")
 	} else {
-		// Show last 10 notifications
 		maxDisplay := 10
 		if len(m.notifications) < maxDisplay {
 			maxDisplay = len(m.notifications)
@@ -59,7 +51,6 @@ func (m model) View() string {
 		}
 	}
 	
-	// Help
 	s.WriteString("\n")
 	s.WriteString(strings.Repeat("─", m.width))
 	s.WriteString("\n")
@@ -69,7 +60,6 @@ func (m model) View() string {
 	return s.String()
 }
 
-// renderNotification creates a styled notification
 func renderNotification(n Notification) string {
 	color := getNotificationColor(n.Type)
 	icon := getNotificationIcon(n.Type)
@@ -91,7 +81,6 @@ func renderNotification(n Notification) string {
 	return box.Render(content)
 }
 
-// formatType converts type to readable format
 func formatType(t string) string {
 	types := map[string]string{
 		"trip_created": "Trip Created",
@@ -106,7 +95,6 @@ func formatType(t string) string {
 	return strings.ReplaceAll(t, "_", " ")
 }
 
-// formatTimeAgo converts timestamp to "X ago" format
 func formatTimeAgo(t time.Time) string {
 	diff := time.Since(t)
 	

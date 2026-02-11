@@ -8,11 +8,13 @@ import (
 
 type TouristController struct {
 	repo repositories.TouristRepository
+	hub *websocket.Hub
 }
 
-func NewTouristController(repo repositories.TouristRepository) *TouristController {
+func NewTouristController(repo repositories.TouristRepository, hub *websocket.Hub) *TouristController {
 	return &TouristController{
 		repo: repo,
+		hub: hub,
 	}
 }
 
@@ -21,7 +23,7 @@ type TripController struct {
 	hub *websocket.Hub
 }
 
-func NewTripController(repo repositories.TripRepository, hub *websocket.Hub) *TripController{
+func NewTripController(repo repositories.TripRepository, hub *websocket.Hub) *TripController {
 	return &TripController{
 		repo: repo,
 		hub: hub,
